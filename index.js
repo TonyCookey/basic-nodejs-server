@@ -25,6 +25,13 @@ server.on('request', (request, response) => {
         response.write('<h1>Index Page</h1>')
         response.end()
 
+    } else if (req.method === 'POST' && request.url === '/posts') {
+        req.on('data', (data) => {
+            const post = data.toString();
+            console.log('Request:', post);
+            friends.push(JSON.parse(post));
+        });
+        req.pipe(res);
     } else {
         response.statusCode = 404
         response.end()
